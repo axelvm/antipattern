@@ -33,6 +33,11 @@ function writePlayers(players: Player[]) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(players));
 }
 
+export function emailAlreadyRegistered(email: string): boolean {
+  const normalized = email.trim().toLowerCase();
+  return readPlayers().some((p) => p.email.toLowerCase() === normalized);
+}
+
 export function registerPlayer(
   input: RegisterInput,
 ): { ok: true } | { ok: false; error: string } {
