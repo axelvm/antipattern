@@ -4,7 +4,16 @@ const STORAGE_KEY = "antipattern.players";
 const SESSION_KEY = "antipattern.session";
 
 export type Player = {
-  username: string;
+  lastName: string;
+  firstName: string;
+  email: string;
+  password: string;
+};
+
+export type RegisterInput = {
+  lastName: string;
+  firstName: string;
+  email: string;
   password: string;
 };
 
@@ -25,45 +34,46 @@ function writePlayers(players: Player[]) {
 }
 
 export function registerPlayer(
-  username: string,
-  password: string,
+  input: RegisterInput,
 ): { ok: true } | { ok: false; error: string } {
-  const trimmed = username.trim();
-  if (!trimmed || !password) {
-    return { ok: false, error: "Identifiant et mot de passe requis." };
+  const lastName = input.lastName.trim();
+  const firstName = input.firstName.trim();
+  const email = input.email.trim().toLowerCase();
+  const { password } = input;
+
+  if (!lastName || !firstName || !email || !password) {
+    return { ok: false, error: "Tous les champs sont requis." };
   }
-  if (trimmed.length < 3) {
-    return { ok: false, error: "Identifiant trop court (3 caractères min.)." };
-  }
-  if (password.length < 4) {
-    return { ok: false, error: "Mot de passe trop court (4 caractères min.)." };
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return { ok: false, error: "Adresse e-mail invalide." };
   }
 
   const players = readPlayers();
-  if (players.some((p) => p.username.toLowerCase() === trimmed.toLowerCase())) {
-    return { ok: false, error: "Cet identifiant est déjà pris." };
+  if (players.some((p) => p.email.toLowerCase() === email)) {
+    return { ok: false, error: "Cette adresse e-mail est déjà utilisée." };
   }
 
-  players.push({ username: trimmed, password });
+  players.push({ lastName, firstName, email, password });
   writePlayers(players);
   return { ok: true };
 }
 
 export function loginPlayer(
-  username: string,
+  email: string,
   password: string,
 ): { ok: true } | { ok: false; error: string } {
-  const trimmed = username.trim();
+  const normalized = email.trim().toLowerCase();
   const players = readPlayers();
   const match = players.find(
-    (p) => p.username.toLowerCase() === trimmed.toLowerCase() && p.password === password,
+    (p) => p.email.toLowerCase() === normalized && p.password === password,
   );
 
   if (!match) {
     return { ok: false, error: "Identifiants incorrects." };
   }
 
-  sessionStorage.setItem(SESSION_KEY, match.username);
+  sessionStorage.setItem(SESSION_KEY, match.email);
   return { ok: true };
 }
 

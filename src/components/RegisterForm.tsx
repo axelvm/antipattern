@@ -1,15 +1,40 @@
 "use client";
 
+import {
+  ClipboardEvent,
+  FormEvent,
+  KeyboardEvent,
+  useState,
+} from "react";
 import Link from "next/link";
-import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { registerPlayer } from "@/lib/auth";
+import {
+  assertPasswordConfirmedThrice,
+  verifyPassword,
+} from "@/services/passwordRules";
+
+const fieldClassName =
+  "w-full border border-white/15 bg-black px-3 py-2.5 text-sm text-white outline-none transition-[border-color] placeholder:text-white/25 focus:border-white/40";
+
+function blockClipboard(event: ClipboardEvent<HTMLInputElement>) {
+  event.preventDefault();
+}
+
+function blockPasteShortcuts(event: KeyboardEvent<HTMLInputElement>) {
+  if ((event.ctrlKey || event.metaKey) && ["v", "V", "c", "C", "x", "X"].includes(event.key)) {
+    event.preventDefault();
+  }
+}
 
 export function RegisterForm() {
   const router = useRouter();
-  const [username, setUsername] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirm, setConfirm] = useState("");
+  const [passwordAgain, setPasswordAgain] = useState("");
+  const [passwordThrice, setPasswordThrice] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
 
@@ -18,13 +43,38 @@ export function RegisterForm() {
     setPending(true);
     setError(null);
 
-    if (password !== confirm) {
-      setError("Les mots de passe ne correspondent pas.");
+    if (!lastName.trim() || !firstName.trim() || !email.trim()) {
+      setError("Nom, prénom et e-mail sont requis.");
       setPending(false);
       return;
     }
 
-    const result = registerPlayer(username, password);
+    const confirmation = assertPasswordConfirmedThrice(
+      password,
+      passwordAgain,
+      passwordThrice,
+    );
+    if (!confirmation.ok) {
+      setError(confirmation.message);
+      setPending(false);
+      return;
+    }
+
+    // Suitability is checked only after the triple confirmation.
+    // A single rule error is revealed at a time.
+    const suitability = verifyPassword(confirmation.password);
+    if (!suitability.ok) {
+      setError(suitability.message);
+      setPending(false);
+      return;
+    }
+
+    const result = registerPlayer({
+      lastName,
+      firstName,
+      email,
+      password: confirmation.password,
+    });
     if (!result.ok) {
       setError(result.error);
       setPending(false);
@@ -43,21 +93,51 @@ export function RegisterForm() {
         Inscription
       </h1>
       <p className="mt-2 text-sm leading-relaxed text-white/55">
-        Créez un compte pour pouvoir vous connecter à la partie.
+        Renseignez vos informations. Le mot de passe doit être saisi trois fois
+        — sans coller.
       </p>
 
       <form className="mt-8 space-y-5" onSubmit={onSubmit} noValidate>
         <label className="block space-y-2">
           <span className="font-[family-name:var(--font-mono)] text-[0.7rem] uppercase tracking-[0.18em] text-white/45">
-            Identifiant
+            Nom
           </span>
           <input
-            name="username"
-            autoComplete="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            className="w-full border border-white/15 bg-black px-3 py-2.5 text-sm text-white outline-none transition-[border-color] placeholder:text-white/25 focus:border-white/40"
-            placeholder="votre_pseudo"
+            name="lastName"
+            autoComplete="family-name"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            className={fieldClassName}
+            placeholder="Dupont"
+          />
+        </label>
+
+        <label className="block space-y-2">
+          <span className="font-[family-name:var(--font-mono)] text-[0.7rem] uppercase tracking-[0.18em] text-white/45">
+            Prénom
+          </span>
+          <input
+            name="firstName"
+            autoComplete="given-name"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            className={fieldClassName}
+            placeholder="Alex"
+          />
+        </label>
+
+        <label className="block space-y-2">
+          <span className="font-[family-name:var(--font-mono)] text-[0.7rem] uppercase tracking-[0.18em] text-white/45">
+            E-mail
+          </span>
+          <input
+            name="email"
+            type="email"
+            autoComplete="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className={fieldClassName}
+            placeholder="vous@exemple.fr"
           />
         </label>
 
@@ -71,23 +151,50 @@ export function RegisterForm() {
             autoComplete="new-password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full border border-white/15 bg-black px-3 py-2.5 text-sm text-white outline-none transition-[border-color] placeholder:text-white/25 focus:border-white/40"
-            placeholder="••••••••"
+            onPaste={blockClipboard}
+            onCopy={blockClipboard}
+            onCut={blockClipboard}
+            onKeyDown={blockPasteShortcuts}
+            className={fieldClassName}
+            placeholder="saisie 1 / 3"
           />
         </label>
 
         <label className="block space-y-2">
           <span className="font-[family-name:var(--font-mono)] text-[0.7rem] uppercase tracking-[0.18em] text-white/45">
-            Confirmer
+            Mot de passe (encore)
           </span>
           <input
-            name="confirm"
+            name="passwordAgain"
             type="password"
             autoComplete="new-password"
-            value={confirm}
-            onChange={(e) => setConfirm(e.target.value)}
-            className="w-full border border-white/15 bg-black px-3 py-2.5 text-sm text-white outline-none transition-[border-color] placeholder:text-white/25 focus:border-white/40"
-            placeholder="••••••••"
+            value={passwordAgain}
+            onChange={(e) => setPasswordAgain(e.target.value)}
+            onPaste={blockClipboard}
+            onCopy={blockClipboard}
+            onCut={blockClipboard}
+            onKeyDown={blockPasteShortcuts}
+            className={fieldClassName}
+            placeholder="saisie 2 / 3"
+          />
+        </label>
+
+        <label className="block space-y-2">
+          <span className="font-[family-name:var(--font-mono)] text-[0.7rem] uppercase tracking-[0.18em] text-white/45">
+            Mot de passe (preuve humaine)
+          </span>
+          <input
+            name="passwordThrice"
+            type="password"
+            autoComplete="new-password"
+            value={passwordThrice}
+            onChange={(e) => setPasswordThrice(e.target.value)}
+            onPaste={blockClipboard}
+            onCopy={blockClipboard}
+            onCut={blockClipboard}
+            onKeyDown={blockPasteShortcuts}
+            className={fieldClassName}
+            placeholder="saisie 3 / 3"
           />
         </label>
 
@@ -108,7 +215,10 @@ export function RegisterForm() {
 
       <p className="mt-6 text-center text-sm text-white/40">
         Déjà inscrit&nbsp;?{" "}
-        <Link href="/connexion" className="text-white/70 underline-offset-2 hover:text-white hover:underline">
+        <Link
+          href="/connexion"
+          className="text-white/70 underline-offset-2 hover:text-white hover:underline"
+        >
           Se connecter
         </Link>
       </p>
