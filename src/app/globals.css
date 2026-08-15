@@ -131,3 +131,37 @@ body {
     transform: scaleX(1);
   }
 }
+
+/* CGU: deliberately hard to read — fluo yellow / red, tiny uniform type */
+.cgu-wall__title {
+  margin: 0 0 0.85rem;
+  color: #ff0000;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+}
+
+.cgu-wall__body {
+  margin: 0;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.35;
+  letter-spacing: 0;
+  text-align: justify;
+  word-break: break-word;
+}
+
+.cgu-wall__body p {
+  margin: 0;
+}
+
+.cgu-y {
+  color: #f6ff00;
+}
+
+.cgu-r {
+  color: #ff0000;
+}

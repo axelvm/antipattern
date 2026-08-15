@@ -18,8 +18,8 @@ export default async function CguPage({ searchParams }: CguPageProps) {
 
   if (embed) {
     return (
-      <div className="min-h-full bg-[#0b1014] px-5 py-6 text-[#d8e0e4] sm:px-8">
-        <CguContent compact />
+      <div className="min-h-full bg-[#0a0a0a] px-3 py-3">
+        <CguContent />
       </div>
     );
   }
@@ -38,8 +38,8 @@ export default async function CguPage({ searchParams }: CguPageProps) {
         </p>
       </header>
 
-      <main className="mx-auto w-full max-w-3xl flex-1 px-6 pb-20 pt-4 md:px-10">
-        <div className="rounded-sm bg-[#0b1014]/[0.72] px-6 py-8 text-fog shadow-[0_24px_60px_rgba(0,0,0,0.35)] sm:px-10 sm:py-10">
+      <main className="mx-auto w-full max-w-3xl flex-1 px-4 pb-16 pt-2 md:px-10">
+        <div className="bg-[#0a0a0a] px-3 py-4 sm:px-4">
           <CguContent />
         </div>
       </main>

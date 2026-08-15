@@ -1,4 +1,7 @@
-/** Code de validation e-mail dissimulé dans les CGU (article 14). */
+/**
+ * Code de validation e-mail (provisoire).
+ * La procédure définitive dans les CGU sera détaillée plus tard.
+ */
 export const EMAIL_VALIDATION_CODE = "CLAUSE-14-BIS";
 
 export function isEmailValidationCode(value: string): boolean {
