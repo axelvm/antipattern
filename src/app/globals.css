@@ -9,6 +9,8 @@
   --slate: #3d4f5c;
   --corridor: #5a6b75;
   --lamp: #f0c98a;
+  --trap-blue: #0a1628;
+  --trap-blue-text: #0d1f38;
   --background: var(--paper);
   --foreground: var(--ink);
 }

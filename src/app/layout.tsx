@@ -15,12 +15,19 @@ const ibmPlexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ANTIPATTERN — Bienvenue",
+  title: {
+    default: "ANTIPATTERN",
+    template: "%s",
+  },
   description:
-    "Un site-jeu d’évasion bâti sur de mauvais réflexes. Entrez si vous osez.",
+    "Connectez-vous, explorez un site qui fait tout de travers, et trouvez le flag.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <html
       lang="fr"
