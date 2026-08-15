@@ -165,3 +165,12 @@ body {
 .cgu-r {
   color: #ff0000;
 }
+
+.cgu-wall__link {
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}

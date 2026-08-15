@@ -8,9 +8,12 @@ import {
   useState,
 } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { EmailValidationPopup } from "@/components/EmailValidationPopup";
-import { emailAlreadyRegistered, registerPlayer } from "@/lib/auth";
+import { emailAlreadyRegistered } from "@/lib/auth";
+import {
+  clearPendingRegistration,
+  savePendingRegistration,
+} from "@/services/emailValidation";
 import {
   assertPasswordConfirmedThrice,
   verifyPassword,
@@ -37,7 +40,6 @@ type PendingRegistration = {
 };
 
 export function RegisterForm() {
-  const router = useRouter();
   const [lastName, setLastName] = useState("");
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
@@ -49,6 +51,7 @@ export function RegisterForm() {
   const [draft, setDraft] = useState<PendingRegistration | null>(null);
 
   const closePopup = useCallback(() => {
+    clearPendingRegistration();
     setDraft(null);
     setPending(false);
   }, []);
@@ -88,26 +91,15 @@ export function RegisterForm() {
       return;
     }
 
-    setDraft({
+    const nextDraft = {
       lastName: lastName.trim(),
       firstName: firstName.trim(),
       email: email.trim(),
       password: confirmation.password,
-    });
+    };
+    savePendingRegistration(nextDraft);
+    setDraft(nextDraft);
     setPending(false);
-  }
-
-  function completeRegistration() {
-    if (!draft) return;
-
-    const result = registerPlayer(draft);
-    if (!result.ok) {
-      setError(result.error);
-      setDraft(null);
-      return;
-    }
-
-    router.push("/connexion?inscrit=1");
   }
 
   return (
@@ -252,11 +244,7 @@ export function RegisterForm() {
       </div>
 
       {draft ? (
-        <EmailValidationPopup
-          email={draft.email}
-          onValidated={completeRegistration}
-          onCancel={closePopup}
-        />
+        <EmailValidationPopup email={draft.email} onCancel={closePopup} />
       ) : null}
     </>
   );

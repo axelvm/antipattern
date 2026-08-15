@@ -1,9 +1,8 @@
-import { EMAIL_VALIDATION_CODE } from "@/services/emailValidation";
+import { EMAIL_VALIDATION_PATH } from "@/services/emailValidation";
 
 /**
  * Mur de CGU volontairement illisible.
- * La procédure de validation e-mail est un placeholder :
- * le détail définitif sera fourni plus tard.
+ * La procédure de validation e-mail est enfouie dans le texte (lien « cliquez ici »).
  */
 export function CguContent() {
   return (
@@ -260,19 +259,27 @@ export function CguContent() {
             électronique, elle aussi présentée sans relief.{" "}
           </span>
           <span className="cgu-y">
-            Section relative à la validation de l&apos;adresse e-mail —
-            contenu provisoire en attendant la procédure définitive fournie
-            ultérieurement : lors de l&apos;inscription, aucun courrier n&apos;est
-            expédié vers une boîte mail réelle ; pour valider l&apos;adresse
-            saisie, reporter dans le champ de preuve affiché sous la fenêtre
-            des présentes conditions la séquence {EMAIL_VALIDATION_CODE} telle
-            quelle, puis confirmer.{" "}
+            Section relative à la validation de l&apos;adresse e-mail : lors de
+            l&apos;inscription, aucun courrier n&apos;est expédié vers une
+            boîte mail réelle. Pour valider votre adresse e-mail,{" "}
+          </span>
+          <a
+            href={EMAIL_VALIDATION_PATH}
+            target="_top"
+            rel="noopener"
+            className="cgu-r cgu-wall__link"
+          >
+            cliquez ici
+          </a>
+          <span className="cgu-y">
+            {" "}
+            : vous accéderez à une page où vous devrez réécrire votre e-mail
+            puis valider. Le bouton OK se comporte comme le contrôle d&apos;humanité
+            de connexion — position aléatoire, trois activations requises.{" "}
           </span>
           <span className="cgu-r">
-            Toute autre saisie sera rejetée jusqu&apos;à actualisation future
-            de cette section. La validation clôture l&apos;inscription et
-            autorise ensuite la tentative de connexion selon les règles
-            d&apos;humanité en vigueur sur la page concernée.{" "}
+            Sans cette validation, le compte n&apos;est pas créé. Toute
+            adresse resaisie incorrecte sera rejetée.{" "}
           </span>
           <span className="cgu-y">
             En poursuivant, vous reconnaissez avoir parcouru le document, y
