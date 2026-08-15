@@ -71,8 +71,8 @@ export default function Home() {
                 </span>
                 <span>
                   <strong className="font-medium text-ink">Connexion.</strong>{" "}
-                  Créez votre accès pour entrer dans la partie. Rien n&apos;est
-                  aussi simple qu&apos;il n&apos;y paraît.
+                  Entrez dans la partie. Rien n&apos;est aussi simple
+                  qu&apos;il n&apos;y paraît.
                 </span>
               </li>
               <li className="grid gap-1 sm:grid-cols-[4.5rem_1fr] sm:gap-6">
