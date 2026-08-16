@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useCallback, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { WanderingHumanButton } from "@/components/WanderingHumanButton";
 import { loginPlayer } from "@/lib/auth";
@@ -96,6 +97,12 @@ export function LoginForm() {
             </p>
           ) : null}
         </form>
+
+        <p className="mt-6 text-center text-sm text-[#0a1836]">
+          <Link href="/inscription" className="cursor-default outline-none">
+            S&apos;inscrire
+          </Link>
+        </p>
       </div>
 
       {fieldsReady ? (

@@ -4,10 +4,11 @@
  */
 
 export type PasswordRuleId =
-  | "length-27"
+  | "length-22"
   | "letter-and-number"
   | "special-char"
-  | "special-char-not-paren";
+  | "special-char-not-paren"
+  | "guillaume";
 
 export type PasswordRule = {
   id: PasswordRuleId;
@@ -23,9 +24,9 @@ const SPECIAL_NOT_PAREN = /[^A-Za-z0-9()]/;
 
 export const PASSWORD_RULES: readonly PasswordRule[] = [
   {
-    id: "length-27",
-    message: "Le mot de passe doit contenir exactement 27 caractères.",
-    test: (password) => password.length === 27,
+    id: "length-22",
+    message: "Le mot de passe doit contenir exactement 22 caractères.",
+    test: (password) => password.length === 22,
   },
   {
     id: "letter-and-number",
@@ -42,6 +43,11 @@ export const PASSWORD_RULES: readonly PasswordRule[] = [
     message:
       "Le mot de passe doit contenir un caractère spécial qui n’est pas une parenthèse.",
     test: (password) => SPECIAL_NOT_PAREN.test(password),
+  },
+  {
+    id: "guillaume",
+    message: "Le mot de passe doit contenir le nom de Guillaume.",
+    test: (password) => password.includes("guillaume"),
   },
 ] as const;
 

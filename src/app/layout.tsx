@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Syne, IBM_Plex_Mono } from "next/font/google";
+import { PeriodicLockPopup } from "@/components/PeriodicLockPopup";
+import { SessionTimer } from "@/components/SessionTimer";
 import "./globals.css";
 
 const syne = Syne({
@@ -33,7 +35,11 @@ export default function RootLayout({
       lang="fr"
       className={`${syne.variable} ${ibmPlexMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <SessionTimer />
+        <PeriodicLockPopup />
+        {children}
+      </body>
     </html>
   );
 }

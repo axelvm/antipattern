@@ -2,6 +2,8 @@
 
 const STORAGE_KEY = "antipattern.players";
 const SESSION_KEY = "antipattern.session";
+const SESSION_STARTED_AT_KEY = "antipattern.sessionStartedAt";
+const SESSION_CHANGE_EVENT = "antipattern:session";
 
 export type Player = {
   lastName: string;
@@ -79,7 +81,19 @@ export function loginPlayer(
   }
 
   sessionStorage.setItem(SESSION_KEY, match.email);
+  notifySessionChange();
   return { ok: true };
+}
+
+export function subscribeSession(onStoreChange: () => void) {
+  if (typeof window === "undefined") return () => {};
+  window.addEventListener(SESSION_CHANGE_EVENT, onStoreChange);
+  return () => window.removeEventListener(SESSION_CHANGE_EVENT, onStoreChange);
+}
+
+function notifySessionChange() {
+  if (typeof window === "undefined") return;
+  window.dispatchEvent(new Event(SESSION_CHANGE_EVENT));
 }
 
 export function getSession(): string | null {
@@ -87,6 +101,32 @@ export function getSession(): string | null {
   return sessionStorage.getItem(SESSION_KEY);
 }
 
+export function getSessionStartedAt(): number | null {
+  if (typeof window === "undefined") return null;
+  const raw = sessionStorage.getItem(SESSION_STARTED_AT_KEY);
+  if (!raw) return null;
+  const parsed = Number(raw);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : null;
+}
+
+export function ensureSessionStartedAt(): number {
+  const existing = getSessionStartedAt();
+  if (existing != null) return existing;
+  const now = Date.now();
+  sessionStorage.setItem(SESSION_STARTED_AT_KEY, String(now));
+  notifySessionChange();
+  return now;
+}
+
 export function clearSession() {
   sessionStorage.removeItem(SESSION_KEY);
+  notifySessionChange();
+}
+
+export function clearSessionLocalData() {
+  localStorage.removeItem(SESSION_KEY);
+  localStorage.removeItem(SESSION_STARTED_AT_KEY);
+  sessionStorage.removeItem(SESSION_KEY);
+  sessionStorage.removeItem(SESSION_STARTED_AT_KEY);
+  notifySessionChange();
 }

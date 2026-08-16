@@ -38,15 +38,20 @@ export default function Home() {
 
           <p className="animate-rise-delay-2 mt-4 max-w-md text-[0.95rem] leading-relaxed text-slate">
             Un site-jeu d&apos;évasion où chaque interface ment un peu. Votre
-            mission&nbsp;: participer… et décrocher le flag caché.
+            mission&nbsp;: participer&nbsp;<Link
+              href="/connexion"
+            >
+               ici...&nbsp;
+            </Link>
+             et décrocher le flag caché.
           </p>
 
           <div className="animate-rise-delay-3 mt-10">
             <Link
-              href="/connexion"
+              href="/"
               className="cta-underline relative inline-flex items-center gap-3 font-[family-name:var(--font-display)] text-lg font-bold tracking-wide text-ink transition-colors hover:text-signal"
             >
-              Participer à la partie
+              Je ne lance pas la partie
               <span aria-hidden className="text-signal">
                 →
               </span>

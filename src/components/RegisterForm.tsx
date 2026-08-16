@@ -18,6 +18,7 @@ import {
   assertPasswordConfirmedThrice,
   verifyPassword,
 } from "@/services/passwordRules";
+import { useRouter } from "next/navigation";
 
 const fieldClassName =
   "w-full border border-white/15 bg-black px-3 py-2.5 text-sm text-white outline-none transition-[border-color] placeholder:text-white/25 focus:border-white/40";
@@ -49,7 +50,7 @@ export function RegisterForm() {
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
   const [draft, setDraft] = useState<PendingRegistration | null>(null);
-
+  const router = useRouter();
   const closePopup = useCallback(() => {
     clearPendingRegistration();
     setDraft(null);
@@ -223,13 +224,23 @@ export function RegisterForm() {
             </p>
           ) : null}
 
-          <button
+          <div className="flex flex-row gap-2">
+             <button
+            onClick={() => router.push("/")}
+            className="w-full bg-green-600 px-4 py-3 font-[family-name:var(--font-display)] text-sm font-bold tracking-wide text-white transition-opacity hover:opacity-90 disabled:opacity-60"
+          >
+            Créer mon compte plus tard
+          </button>
+            <button
             type="submit"
             disabled={pending || Boolean(draft)}
-            className="w-full bg-white px-4 py-3 font-[family-name:var(--font-display)] text-sm font-bold tracking-wide text-black transition-opacity hover:opacity-90 disabled:opacity-60"
+            className="w-full px-4 py-3 text-sm tracking-wide text-white/80 transition-opacity hover:opacity-90 disabled:opacity-60"
           >
             {pending ? "Vérification…" : "Créer mon compte"}
           </button>
+         
+          </div>
+          
         </form>
 
         <p className="mt-6 text-center text-sm text-white/40">
