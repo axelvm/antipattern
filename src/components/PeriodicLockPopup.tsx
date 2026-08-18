@@ -1,7 +1,10 @@
 "use client";
 
 import { useEffect, useId, useState } from "react";
-import Image from "next/image";
+import {
+  DEFAULT_GUILLAUME_MESSAGE,
+  subscribeGuillaumePopup,
+} from "@/services/guillaumePopup";
 
 const INTERVAL_MS = 60_000;
 const COUNTDOWN_SECONDS = 5;
@@ -49,6 +52,17 @@ export function PeriodicLockPopup() {
   const [imageSrc, setImageSrc] = useState<(typeof DICKHEAD_IMAGES)[number]>(
     DICKHEAD_IMAGES[0],
   );
+  const [message, setMessage] = useState(DEFAULT_GUILLAUME_MESSAGE);
+
+  useEffect(() => {
+    return subscribeGuillaumePopup((nextMessage) => {
+      setFullscreen(false);
+      setSecondsLeft(COUNTDOWN_SECONDS);
+      setImageSrc(pickDickheadImage());
+      setMessage(nextMessage);
+      setOpen(true);
+    });
+  }, []);
 
   useEffect(() => {
     if (open) return;
@@ -57,6 +71,7 @@ export function PeriodicLockPopup() {
       setFullscreen(false);
       setSecondsLeft(COUNTDOWN_SECONDS);
       setImageSrc(pickDickheadImage());
+      setMessage(DEFAULT_GUILLAUME_MESSAGE);
       setOpen(true);
     }, INTERVAL_MS);
 
@@ -127,7 +142,7 @@ export function PeriodicLockPopup() {
             id={titleId}
             className="shrink-0 text-center font-[family-name:var(--font-display)] text-xl font-bold tracking-tight text-white sm:text-2xl"
           >
-            petit coucou de Guillaume au passage&nbsp;!
+            {message}
           </h2>
         </div>
 

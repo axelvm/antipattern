@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Syne, IBM_Plex_Mono } from "next/font/google";
+import { HelpChatPopup } from "@/components/HelpChatPopup";
 import { PeriodicLockPopup } from "@/components/PeriodicLockPopup";
 import { SessionTimer } from "@/components/SessionTimer";
 import "./globals.css";
@@ -38,6 +39,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <SessionTimer />
         <PeriodicLockPopup />
+        <HelpChatPopup />
         {children}
       </body>
     </html>
