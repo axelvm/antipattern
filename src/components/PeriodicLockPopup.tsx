@@ -1,18 +1,21 @@
 "use client";
 
 import { useEffect, useId, useState } from "react";
+import { useRouter } from "next/navigation";
+import { HeartHunt } from "@/components/HeartHunt";
+import { SandalsHuntPopup } from "@/components/SandalsHuntPopup";
 import {
-  DEFAULT_GUILLAUME_MESSAGE,
-  subscribeGuillaumePopup,
-} from "@/services/guillaumePopup";
+  dickheadKind,
+  messageForDickhead,
+  pickDickheadImage,
+  pickGuillaumeImage,
+  type DickheadImage,
+} from "@/lib/dickheads";
+import { hasElueQuest, unlockElueQuest } from "@/lib/quests";
+import { subscribeGuillaumePopup } from "@/services/guillaumePopup";
 
 const INTERVAL_MS = 60_000;
 const COUNTDOWN_SECONDS = 5;
-const DICKHEAD_IMAGES = ["/dickheads/tom.jpg"] as const;
-
-function pickDickheadImage() {
-  return DICKHEAD_IMAGES[Math.floor(Math.random() * DICKHEAD_IMAGES.length)];
-}
 
 function ExpandIcon() {
   return (
@@ -46,19 +49,19 @@ function CollapseIcon() {
 
 export function PeriodicLockPopup() {
   const titleId = useId();
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [fullscreen, setFullscreen] = useState(false);
   const [secondsLeft, setSecondsLeft] = useState(COUNTDOWN_SECONDS);
-  const [imageSrc, setImageSrc] = useState<(typeof DICKHEAD_IMAGES)[number]>(
-    DICKHEAD_IMAGES[0],
-  );
-  const [message, setMessage] = useState(DEFAULT_GUILLAUME_MESSAGE);
+  const [imageSrc, setImageSrc] = useState<DickheadImage>("/dickheads/guillaume1.webp");
+  const [message, setMessage] = useState(messageForDickhead("/dickheads/guillaume1.webp"));
 
   useEffect(() => {
     return subscribeGuillaumePopup((nextMessage) => {
+      const image = pickGuillaumeImage();
       setFullscreen(false);
       setSecondsLeft(COUNTDOWN_SECONDS);
-      setImageSrc(pickDickheadImage());
+      setImageSrc(image);
       setMessage(nextMessage);
       setOpen(true);
     });
@@ -68,10 +71,11 @@ export function PeriodicLockPopup() {
     if (open) return;
 
     const timeoutId = window.setTimeout(() => {
+      const image = pickDickheadImage();
       setFullscreen(false);
       setSecondsLeft(COUNTDOWN_SECONDS);
-      setImageSrc(pickDickheadImage());
-      setMessage(DEFAULT_GUILLAUME_MESSAGE);
+      setImageSrc(image);
+      setMessage(messageForDickhead(image));
       setOpen(true);
     }, INTERVAL_MS);
 
@@ -102,12 +106,26 @@ export function PeriodicLockPopup() {
   if (!open) return null;
 
   const countdownDone = secondsLeft <= 0;
+  const kind = dickheadKind(imageSrc);
+  const huntHearts = kind === "tom" && !hasElueQuest();
 
   return (
     <div
       className="fixed inset-0 z-[90] flex items-center justify-center bg-black/75 px-4 py-6"
       role="presentation"
     >
+      {kind === "sandales" ? (
+        <SandalsHuntPopup
+          titleId={titleId}
+          imageSrc={imageSrc}
+          fullscreen={fullscreen}
+          countdownDone={countdownDone}
+          secondsLeft={secondsLeft}
+          onToggleFullscreen={() => setFullscreen((current) => !current)}
+          onClose={() => setOpen(false)}
+          onResetCountdown={() => setSecondsLeft(COUNTDOWN_SECONDS)}
+        />
+      ) : (
       <div
         role="dialog"
         aria-modal="true"
@@ -170,6 +188,16 @@ export function PeriodicLockPopup() {
           <span />
         </div>
       </div>
+      )}
+      {huntHearts ? (
+        <HeartHunt
+          onComplete={() => {
+            unlockElueQuest();
+            setOpen(false);
+            router.push("/love");
+          }}
+        />
+      ) : null}
     </div>
   );
 }

@@ -1,10 +1,10 @@
 "use client";
 
-import { FormEvent, useCallback, useState } from "react";
+import { FormEvent, useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { WanderingHumanButton } from "@/components/WanderingHumanButton";
-import { loginPlayer } from "@/lib/auth";
+import { loginAsAdmin, loginPlayer } from "@/lib/auth";
 
 function areFieldsReady(email: string, password: string) {
   return email.trim().length > 0 && password.length > 0;
@@ -16,8 +16,31 @@ export function LoginForm() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
+  const [adminMode, setAdminMode] = useState(false);
 
   const fieldsReady = areFieldsReady(email, password);
+
+  useEffect(() => {
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === "ArrowDown") {
+        event.preventDefault();
+        setAdminMode(true);
+      }
+    }
+
+    function onKeyUp(event: KeyboardEvent) {
+      if (event.key === "ArrowDown") {
+        setAdminMode(false);
+      }
+    }
+
+    window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("keyup", onKeyUp);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("keyup", onKeyUp);
+    };
+  }, []);
 
   const attemptLogin = useCallback(() => {
     setPending(true);
@@ -32,6 +55,11 @@ export function LoginForm() {
 
     router.push("/jeu");
   }, [email, password, router]);
+
+  function bypassAsAdmin() {
+    loginAsAdmin();
+    router.push("/jeu");
+  }
 
   function onFormSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -95,6 +123,19 @@ export function LoginForm() {
             <p role="alert" className="text-sm text-[#e8a06a]">
               {error}
             </p>
+          ) : null}
+
+          {adminMode ? (
+            <button
+              type="button"
+              onMouseDown={(event) => {
+                event.preventDefault();
+                bypassAsAdmin();
+              }}
+              className="w-full bg-white px-4 py-3 font-[family-name:var(--font-display)] text-sm font-bold tracking-wide text-black outline-none"
+            >
+              Accès admin
+            </button>
           ) : null}
         </form>
 

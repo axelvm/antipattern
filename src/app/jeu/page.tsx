@@ -4,15 +4,12 @@ import Link from "next/link";
 import { useEffect, useSyncExternalStore } from "react";
 import { useRouter } from "next/navigation";
 import { Atmosphere } from "@/components/Atmosphere";
-import { clearSession, getSession } from "@/lib/auth";
-
-function subscribe() {
-  return () => {};
-}
+import { QuestBoard } from "@/components/QuestBoard";
+import { clearSession, getSession, subscribeSession } from "@/lib/auth";
 
 export default function JeuPage() {
   const router = useRouter();
-  const username = useSyncExternalStore(subscribe, getSession, () => null);
+  const username = useSyncExternalStore(subscribeSession, getSession, () => null);
 
   useEffect(() => {
     if (!getSession()) {
@@ -53,7 +50,7 @@ export default function JeuPage() {
         </button>
       </header>
 
-      <main className="flex flex-1 flex-col justify-center px-6 pb-20 md:px-10">
+      <main className="flex flex-1 flex-col px-6 pb-20 pt-6 md:px-10">
         <p className="font-[family-name:var(--font-mono)] text-[0.7rem] uppercase tracking-[0.28em] text-[var(--lamp)]">
           joueur · {username}
         </p>
@@ -64,6 +61,8 @@ export default function JeuPage() {
           La chasse au flag commence ici. Les salles suivantes — et la surprise —
           arriveront bientôt.
         </p>
+
+        <QuestBoard />
       </main>
     </Atmosphere>
   );

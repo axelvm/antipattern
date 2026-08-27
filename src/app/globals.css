@@ -116,6 +116,54 @@ body {
   animation: cta-draw 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.7s both;
 }
 
+@keyframes shirt-button-pop {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--fly-x), var(--fly-y)) rotate(210deg) scale(0.15);
+    opacity: 0;
+  }
+}
+
+.shirt-button {
+  position: absolute;
+  left: 50%;
+  width: 1.15rem;
+  height: 1.15rem;
+  border: 2px solid #f0c98a;
+  border-radius: 999px;
+  background: radial-gradient(circle at 32% 28%, #5a4634, #1a140e 62%, #0a0806);
+  box-shadow: 0 0 0 1px #1a140e, 0 2px 4px rgba(0, 0, 0, 0.55);
+  transform: translate(-50%, -50%);
+}
+
+.shirt-button.is-open {
+  animation: shirt-button-pop 0.48s ease-in forwards;
+}
+
+@keyframes confetti-fall {
+  0% {
+    transform: translate3d(0, -8vh, 0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(var(--confetti-drift), 110vh, 0) rotate(720deg);
+    opacity: 0.9;
+  }
+}
+
+.confetti-piece {
+  position: absolute;
+  top: -12px;
+  animation-name: confetti-fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-delay: var(--confetti-delay);
+  animation-duration: var(--confetti-duration);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-rise,
   .animate-rise-delay-1,
@@ -123,12 +171,18 @@ body {
   .animate-rise-delay-3,
   .lamp-glow,
   .door-frame,
-  .cta-underline::after {
+  .cta-underline::after,
+  .shirt-button.is-open,
+  .confetti-piece {
     animation: none;
   }
 
   .cta-underline::after {
     transform: scaleX(1);
+  }
+
+  .shirt-button.is-open {
+    opacity: 0;
   }
 }
 

@@ -1,30 +1,21 @@
+import { Suspense } from "react";
 import Link from "next/link";
 import { Atmosphere } from "@/components/Atmosphere";
+import { BlindtestDevHarness } from "@/components/blindtest/blindtest-dev-harness";
+import { HomeHeader } from "@/components/HomeHeader";
+import { HomeDoor } from "@/components/HomeDoor";
 
 export default function Home() {
   return (
     <Atmosphere>
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-y-0 right-0 hidden w-[42%] md:block"
-      >
-        <div className="absolute inset-y-[8%] right-[10%] w-[56%] door-frame bg-[linear-gradient(180deg,#2a353c_0%,#1a2228_45%,#12181c_100%)]">
-          <div className="absolute inset-[10%] border border-[rgba(232,238,241,0.12)]" />
-          <div className="absolute left-[18%] top-1/2 h-3 w-3 -translate-y-1/2 rounded-full bg-[var(--signal)] opacity-80" />
-          <div className="absolute inset-x-[18%] bottom-[18%] h-px bg-[rgba(232,238,241,0.2)]" />
-          <div className="absolute inset-x-[18%] top-[22%] h-px bg-[rgba(232,238,241,0.12)]" />
-        </div>
-        <div className="absolute bottom-[8%] right-[8%] h-[4%] w-[70%] bg-[linear-gradient(90deg,transparent,rgba(26,34,40,0.35))]" />
-      </div>
+      {process.env.NODE_ENV === "development" ? (
+        <Suspense fallback={null}>
+          <BlindtestDevHarness />
+        </Suspense>
+      ) : null}
+      <HomeDoor />
 
-      <header className="relative z-10 flex items-center justify-between px-6 py-5 md:px-10">
-        <p className="font-[family-name:var(--font-mono)] text-[0.7rem] uppercase tracking-[0.28em] text-ink/70">
-          salle&nbsp;00
-        </p>
-        <p className="font-[family-name:var(--font-mono)] text-[0.7rem] uppercase tracking-[0.28em] text-ink/50">
-          briefing
-        </p>
-      </header>
+      <HomeHeader />
 
       <main className="relative z-10 flex flex-1 flex-col">
         <section className="flex flex-1 flex-col justify-center px-6 pb-16 pt-6 md:max-w-[58%] md:px-10 md:pb-24">

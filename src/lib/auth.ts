@@ -1,5 +1,7 @@
 "use client";
 
+import { resetQuests } from "@/lib/quests";
+
 const STORAGE_KEY = "antipattern.players";
 const SESSION_KEY = "antipattern.session";
 const SESSION_STARTED_AT_KEY = "antipattern.sessionStartedAt";
@@ -66,6 +68,13 @@ export function registerPlayer(
   return { ok: true };
 }
 
+const ADMIN_SESSION = "admin";
+
+export function loginAsAdmin() {
+  sessionStorage.setItem(SESSION_KEY, ADMIN_SESSION);
+  notifySessionChange();
+}
+
 export function loginPlayer(
   email: string,
   password: string,
@@ -120,6 +129,24 @@ export function ensureSessionStartedAt(): number {
 
 export function clearSession() {
   sessionStorage.removeItem(SESSION_KEY);
+  notifySessionChange();
+}
+
+export function resetEntireGame() {
+  if (typeof window === "undefined") return;
+  for (const storage of [window.localStorage, window.sessionStorage]) {
+    const keys: string[] = [];
+    for (let i = 0; i < storage.length; i += 1) {
+      const key = storage.key(i);
+      if (key?.startsWith("antipattern")) {
+        keys.push(key);
+      }
+    }
+    for (const key of keys) {
+      storage.removeItem(key);
+    }
+  }
+  resetQuests();
   notifySessionChange();
 }
 

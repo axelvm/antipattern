@@ -109,7 +109,7 @@ export function SessionTimer() {
       >
         {formatElapsed(displayedElapsed)}
       </time>
-      {adminMode ? (
+      {adminMode && pathname !== "/" ? (
         <button
           type="button"
           className="pointer-events-auto ml-4 font-[family-name:var(--font-mono)] text-xs uppercase tracking-[0.18em] text-ink/70"

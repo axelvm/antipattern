@@ -1,0 +1,82 @@
+{
+  "profiles": [
+    {
+      "id": "tinder1",
+      "photo": "/tinder/tinder1.jpg",
+      "name": "Virginie, 54",
+      "bio": "Retraitée mais pas retirée. J'aime les colliers de fleurs, les voitures blanches et les gens qui répondent en moins de trois jours. Pas de sport."
+    },
+    {
+      "id": "tinder2",
+      "photo": "/tinder/tinder2.jpg",
+      "name": "Mymy",
+      "bio": "Le dieu de l'amour m'a envoyée, alors like si tu sais reconnaître une élue."
+    },
+    {
+      "id": "tinder3",
+      "photo": "/tinder/tinder3.jpg",
+      "name": "Pauline, 30",
+      "bio": "30 ans | Prof des écoles 📚 | Geek assumé 🎮\n\nJ’aime les jeux vidéo, le JDR, les fléchettes 🎯 et les soirées qui commencent tranquillement et finissent à 4h du matin avec « franchement, on a passé une super soirée ».\n\n🍻 J’aime boire un verre\n🎲 J’aime lancer des dés\n🎮 J’aime geeker\n🎯 Je deviens actuellement beaucoup trop compétitif aux fléchettes\n🎉 Et oui, j’aime faire la fête\n\nSwipe à droite si tu veux être mon partenaire de crime pour une partie de JDR, une soirée arrosée ou une revanche aux fléchettes. 😏"
+    },
+    {
+      "id": "tinder4",
+      "photo": "/tinder/tinder4.jpg",
+      "name": "Mathilde, 28",
+      "bio": "Brunch d'abord, questions ensuite. Si tu n'aimes pas le pain perdu, swipe ailleurs. Cherche quelqu'un pour partager l'addition, pas forcément le reste."
+    },
+    {
+      "id": "tinder5",
+      "photo": "/tinder/tinder5.jpg",
+      "name": "Quiterie, 30",
+      "bio": "Comme tu peux le voir j'aime les Toast extra-long. J'aime aussi les conversations extra-courtes. Like si tu assumes."
+    },
+    {
+      "id": "tinder6",
+      "photo": "/tinder/tinder6.jpg",
+      "name": "Emma, 29",
+      "bio": "Meuf cool voulant faire des trucs cool avec des gens cool. Juste parcequ'elle est cool, elle est cool."
+    },
+    {
+      "id": "tinder7",
+      "photo": "/tinder/tinder7.jpg",
+      "name": "Axel, 30",
+      "bio": "Je suis chercheur d'or. En quête de ma pépite, j'espère que ça sera toi."
+    },
+    {
+      "id": "tinder8",
+      "photo": "/tinder/tinder8.jpg",
+      "name": "Tom de cromagnon, 28",
+      "bio": "Hier j'ai découvert la douche tout seul, demain j'espère y aller avec quelqu'un."
+    },
+    {
+      "id": "tinder9",
+      "photo": "/tinder/tinder9.jpg",
+      "name": "Axom, 24",
+      "bio": "Jeune couple d'étalons bien montés. Double dose de charme garanti. Cherche une troisième couille pour égayer nos soirées. On espère que tu as bon fond pour qu'on puisse taper dedans."
+    },
+    {
+      "id": "tinder10",
+      "photo": "/tinder/tinder10.jpg",
+      "name": "Adrien, 29",
+      "bio": "Enduit toutes surfaces."
+    },
+    {
+      "id": "tinder11",
+      "photo": "/tinder/tinder11.jpg",
+      "name": "Hugo, 30",
+      "bio": "La calvitie me guette alors profite tant que j'ai de beaux cheveux 😉 Sinon j'suis un metalleux donc évidemment que je suis un nounours et que j'ai des goûts impeccables pour trouver le bar de notre premier date !<"
+    },
+    {
+      "id": "tinder12",
+      "photo": "/tinder/tinder12.jpg",
+      "name": "Théo, 30",
+      "bio": "📦 1m75, célibataire et bien emballé.\n\n❤️ Green flag : je rentre dans les cases.\n🚩 Red flag : j’ai été refusé par Mondial Relay pour excès de personnalité.\n\nJe cherche quelqu’un pour m’ouvrir.\n⚠️ Fragile, mais surtout émotionnellement."
+    },
+    {
+      "id": "tinder13",
+      "photo": "/tinder/tinder13.jpg",
+      "name": "Martin, 29",
+      "bio": "Chevalier cherche sa princesse.\n\nJ'ai pas l'épée la plus longue du château mais même une dague peut pourfendre le plus fort des guerriers.\n\nJ'ai un cheval mais de nous deux, c'est moi l'étalon.\n\nSwipe à droite et je ferai de toi ma reine."
+    }
+  ]
+}

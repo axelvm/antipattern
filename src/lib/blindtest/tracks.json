@@ -1,0 +1,25 @@
+{
+    "tracks": [
+        {
+            "id": "rick",
+            "title": "Never Gonna Give You Up",
+            "artist": "Rick Astley",
+            "src": "/blindtest/rick.mp3",
+            "filter": "envers-ralenti"
+        },
+        {
+            "id": "renaud",
+            "title": "Dès que le vent soufflera",
+            "artist": "Renaud",
+            "src": "/blindtest/renaud.mp3",
+            "filter": "envers-ralenti"
+        },
+        {
+            "id": "celine",
+            "title": "My Heart Will Go On",
+            "artist": "Céline Dion",
+            "src": "/blindtest/celine.mp3",
+            "filter": "envers-ralenti"
+        }
+    ]
+}

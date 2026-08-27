@@ -1,7 +1,8 @@
+import { GUILLAUME_COUCOU_MESSAGE } from "@/lib/dickheads";
+
 const GUILLAUME_POPUP_EVENT = "antipattern:guillaume-popup";
 
-export const DEFAULT_GUILLAUME_MESSAGE =
-  "petit coucou de Guillaume au passage !";
+export const DEFAULT_GUILLAUME_MESSAGE = GUILLAUME_COUCOU_MESSAGE;
 
 export const HELP_REQUEST_GUILLAUME_MESSAGE =
   "Guillaume traitera votre demande dans les meilleurs délais";
