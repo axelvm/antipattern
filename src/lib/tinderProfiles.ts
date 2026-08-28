@@ -16,6 +16,13 @@ export function didWinElueQuest(choices: Record<string, TinderChoice>) {
   return likedIds.length === 1 && likedIds[0] === ELUE_PROFILE_ID;
 }
 
+export function splitProfileName(raw: string) {
+  const trimmed = raw.trim() || "Sans nom";
+  const match = trimmed.match(/^(.*?),\s*(\d+)$/);
+  if (!match?.[1]) return { name: trimmed, age: null as string | null };
+  return { name: match[1].trim(), age: match[2] ?? null };
+}
+
 export function shuffleTinderProfiles(list: TinderProfile[]) {
   const next = [...list];
   for (let i = next.length - 1; i > 0; i -= 1) {

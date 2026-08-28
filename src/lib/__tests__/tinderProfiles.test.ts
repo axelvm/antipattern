@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { didWinElueQuest } from "../tinderProfiles";
+import { didWinElueQuest, splitProfileName } from "../tinderProfiles";
 
 test("gagne seulement avec un like unique sur tinder2", () => {
   assert.equal(didWinElueQuest({ tinder2: "like" }), true);
@@ -19,4 +19,19 @@ test("perd si un autre profil est liké", () => {
 test("perd sans like sur tinder2", () => {
   assert.equal(didWinElueQuest({ tinder2: "dislike" }), false);
   assert.equal(didWinElueQuest({}), false);
+});
+
+test("sépare le prénom et l'âge du profil", () => {
+  assert.deepEqual(splitProfileName("Virginie, 54"), {
+    name: "Virginie",
+    age: "54",
+  });
+  assert.deepEqual(splitProfileName("Mymy"), {
+    name: "Mymy",
+    age: null,
+  });
+  assert.deepEqual(splitProfileName("Tom de cromagnon, 28"), {
+    name: "Tom de cromagnon",
+    age: "28",
+  });
 });

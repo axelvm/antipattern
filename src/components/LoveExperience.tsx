@@ -75,7 +75,7 @@ export function LoveExperience() {
         )}
       </header>
 
-      <main className="flex flex-1 flex-col px-6 pb-16 pt-4 md:px-10">
+      <main className="flex flex-1 flex-col overflow-x-hidden px-6 pb-16 pt-4 md:px-10">
         {tab === "elue" ? (
           <>
             <p className="font-[family-name:var(--font-mono)] text-[0.7rem] uppercase tracking-[0.28em] text-[#fda4af]">
@@ -87,7 +87,7 @@ export function LoveExperience() {
             <p className="mt-3 max-w-lg text-sm leading-relaxed text-fog/65">
               Like ou dislike chaque profil. Un seul like compte vraiment.
             </p>
-            <div className="mt-10">
+            <div className="mt-6">
               <LoveDeck />
             </div>
           </>

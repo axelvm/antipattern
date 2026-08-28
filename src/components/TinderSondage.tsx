@@ -215,6 +215,7 @@ export function TinderSondage() {
             {superLikedId ? " · super like utilisé" : " · 1 super like"}
           </p>
           <TinderProfileCard
+            key={profile.id}
             profile={profile}
             index={index}
             total={profiles.length}

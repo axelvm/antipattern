@@ -121,6 +121,7 @@ export function LoveDeck() {
 
   return (
     <TinderProfileCard
+      key={profile.id}
       profile={profile}
       index={index}
       total={profiles.length}

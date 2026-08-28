@@ -77,6 +77,18 @@
       "photo": "/tinder/tinder13.jpg",
       "name": "Martin, 29",
       "bio": "Chevalier cherche sa princesse.\n\nJ'ai pas l'épée la plus longue du château mais même une dague peut pourfendre le plus fort des guerriers.\n\nJ'ai un cheval mais de nous deux, c'est moi l'étalon.\n\nSwipe à droite et je ferai de toi ma reine."
+    },
+    {
+      "id": "tinder14",
+      "photo": "/tinder/tinder14.jpg",
+      "name": "Arthur, 30",
+      "bio": "Le pain est moelleux, la viande est fondante. Un bonheur."
+    },
+    {
+      "id": "tinder15",
+      "photo": "/tinder/tinder15.jpg",
+      "name": "Tom, 28",
+      "bio": "Chevalier cherche sa princesse.\n\nJ'ai pas l'épée la plus longue du château mais même une dague peut pourfendre le plus fort des guerriers.\n\nJ'ai un cheval mais de nous deux, c'est moi l'étalon.\n\nSwipe à droite et je ferai de toi ma reine."
     }
   ]
 }
